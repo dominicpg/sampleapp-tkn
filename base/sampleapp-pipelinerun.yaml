@@ -2,7 +2,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: sampleapp-prun
+  generateName: sampleapp-prun
 spec:
   pipelineRef:
     name: sampleapp-ci
