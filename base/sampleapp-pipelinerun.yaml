@@ -1,0 +1,32 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: sampleapp-prun
+spec:
+  pipelineRef:
+    name: sampleapp-ci
+  workspaces:
+  - name: shared-data
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 2Gi
+  - name: dockerconfig
+    secret:
+      secretName: dockerhub-secret
+  params:
+  - name: repoUrl
+    value: https://github.com/dominicpg/sampleapp.git
+  - name: revision
+    value: main
+  - name: sparseCheckoutDirectories
+    value: /helloworldapp/
+  - name: imageUrl
+    value: dominicpg/sampleapp
+  - name: pathToContext
+    value: helloworldapp
+
